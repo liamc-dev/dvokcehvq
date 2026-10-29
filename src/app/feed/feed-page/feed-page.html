@@ -1,0 +1,77 @@
+<section class="feed" [attr.aria-busy]="loading()">
+  <header class="feed-header">
+    <h1 #heading tabindex="-1">{{ title() }}</h1>
+    <button matButton type="button" (click)="refresh()" [disabled]="loading()">Refresh</button>
+  </header>
+
+  <p class="visually-hidden" aria-live="polite">{{ status() }}</p>
+
+  <div class="progress">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Loading stories" />
+    }
+  </div>
+
+  @if (failed()) {
+    <div class="notice" role="alert">
+      <p>We couldn't load the stories. Check your connection and try again.</p>
+      <button matButton="filled" type="button" (click)="retry()">Try again</button>
+    </div>
+  } @else if (shownPage(); as shown) {
+    @if (failedMessage()) {
+      <!-- Not a live region itself: the status message above already reads this out. -->
+      <div class="partial-failure">
+        <span>{{ failedMessage() }}</span>
+        <button matButton type="button" (click)="retry()" [disabled]="loading()">Try again</button>
+      </div>
+    }
+
+    @if (shown.stories.length) {
+      <!-- role="list" because Safari stops announcing a list once its bullets are hidden. -->
+      <ol class="stories" role="list" [class.updating]="loading()">
+        @for (story of shown.stories; track story.id) {
+          <li [attr.value]="story.rank"><app-story-row [story]="story" [rank]="story.rank" /></li>
+        }
+      </ol>
+    } @else {
+      <p class="notice">There are no stories to show right now.</p>
+    }
+
+    @if (shown.total > pageSizeOptions[0]) {
+      <div class="pager">
+        <div class="page-jump">
+          <label for="page-list">Page</label>
+          <select
+            id="page-list"
+            #pageList
+            aria-describedby="page-count"
+            (change)="jumpToPage(pageList.value)"
+          >
+            @for (number of pageNumbers(); track number) {
+              <option [value]="number" [selected]="number === shown.page">{{ number }}</option>
+            }
+          </select>
+          <span id="page-count">of {{ shown.pageCount }}</span>
+        </div>
+        <mat-paginator
+          [length]="shown.total"
+          [pageSize]="size()"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="shown.page - 1"
+          showFirstLastButtons
+          (page)="onPaginatorChange($event)"
+          aria-label="Choose a page of stories"
+        />
+      </div>
+    }
+  } @else if (loading()) {
+    <ol class="stories" aria-hidden="true">
+      @for (placeholder of placeholders; track placeholder) {
+        <li class="placeholder">
+          <span></span>
+          <span></span>
+        </li>
+      }
+    </ol>
+  }
+</section>

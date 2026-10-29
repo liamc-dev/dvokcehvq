@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.story {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.75rem;
+  padding: 0.875rem 0.5rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.rank {
+  padding-top: 0.1rem;
+  text-align: right;
+  font: var(--mat-sys-title-medium);
+  font-variant-numeric: tabular-nums;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.title {
+  margin: 0;
+  font: var(--mat-sys-title-medium);
+
+  a {
+    color: var(--mat-sys-on-surface);
+    text-decoration: none;
+
+    &:visited {
+      color: var(--mat-sys-on-surface-variant);
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--mat-sys-primary);
+      text-decoration: underline;
+    }
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.8rem;
+  margin: 0.3rem 0 0;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+
+  // A middle dot in the gap after each piece of information. Positioning it outside the piece's
+  // text keeps it out of link underlines, and when the line wraps the dot stays at the end of
+  // the line instead of starting the next one.
+  > * {
+    position: relative;
+  }
+
+  > *:not(:last-child)::after {
+    content: '·';
+    position: absolute;
+    right: -0.55rem;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--mat-sys-primary);
+    }
+  }
+}
+
+.domain {
+  color: var(--mat-sys-primary);
+}

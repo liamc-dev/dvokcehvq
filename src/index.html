@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Dvokcehvq</title>
+    <title>HN Reader</title>
+    <meta name="description" content="A cleaner way to read Hacker News: top and new stories." />
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -16,6 +17,16 @@
       href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined"
       rel="stylesheet"
     />
+    <script>
+      // Apply a saved light/dark choice before the app loads so the page doesn't flash.
+      // The key matches THEME_STORAGE_KEY in src/app/shared/theme.ts.
+      try {
+        const theme = localStorage.getItem('hn-reader-theme');
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    </script>
   </head>
   <body>
     <app-root></app-root>

@@ -1,0 +1,142 @@
+:host {
+  display: block;
+}
+
+.feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 0.5rem 0.5rem;
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-small);
+
+    // It only receives focus from code, after changing page, so no focus ring is needed.
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+// Keeps a fixed slot for the progress bar so the list doesn't jump when it appears.
+.progress {
+  height: 4px;
+}
+
+.stories {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: opacity 150ms ease-out;
+
+  // The previous stories stay in place while the next ones load, faded to show they're old.
+  &.updating {
+    opacity: 0.5;
+  }
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem 1rem 3.25rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  span {
+    height: 0.9rem;
+    border-radius: 4px;
+    background: var(--mat-sys-surface-container-high);
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  span:first-child {
+    width: 70%;
+  }
+
+  span:last-child {
+    width: 40%;
+    height: 0.7rem;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placeholder span {
+    animation: none;
+  }
+
+  .stories {
+    transition: none;
+  }
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 2rem 0.5rem;
+  color: var(--mat-sys-on-surface-variant);
+
+  p {
+    margin: 0;
+  }
+}
+
+.partial-failure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin: 0.75rem 0 0.25rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-radius: 8px;
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  font: var(--mat-sys-body-medium);
+
+  button {
+    --mat-button-text-label-text-color: var(--mat-sys-on-error-container);
+  }
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 1rem;
+  margin-top: 0.5rem;
+}
+
+.page-jump {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+
+  select {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--mat-sys-outline);
+    border-radius: 4px;
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: inherit;
+    cursor: pointer;
+  }
+}
+
+mat-paginator {
+  margin-left: auto;
+  background: transparent;
+}

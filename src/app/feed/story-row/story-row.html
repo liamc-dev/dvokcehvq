@@ -1,0 +1,32 @@
+<article class="story">
+  <span class="rank" aria-hidden="true">{{ rank() }}</span>
+  <div>
+    <h2 class="title">
+      <a [href]="link()" target="_blank" rel="noopener">
+        {{ story().title }}
+        <span class="visually-hidden">(opens in a new tab)</span>
+      </a>
+    </h2>
+    <p class="meta">
+      @if (story().url; as url) {
+        <span class="domain">{{ url | domain }}</span>
+      }
+      @if (!isJob()) {
+        <span>{{ points() }}</span>
+      }
+      @if (story().by; as author) {
+        <span>by {{ author }}</span>
+      }
+      <time [attr.datetime]="postedAt()" [title]="postedAtLabel()">
+        {{ story().time | timeAgo }}
+      </time>
+      @if (!isJob()) {
+        <a [href]="discussionUrl()" target="_blank" rel="noopener">
+          {{ comments() }}
+          <!-- Every row has a link like this, so say which story it's for. -->
+          <span class="visually-hidden">: {{ story().title }} (opens in a new tab)</span>
+        </a>
+      }
+    </p>
+  </div>
+</article>
